@@ -109,23 +109,47 @@ nodemon server.js
 
 ### 生产环境部署
 
-1. 安装 PM2
+1. 关于 PM2
+PM2 是一个守护进程管理器，它将帮助您管理和保持应用程序 24/7 在线。主要特点：
+- 应用程序崩溃后自动重启
+- 运行时性能和资源消耗监控
+- 自动负载均衡
+- 多应用管理
+- 日志管理
+- 开机自启动
+
+2. 安装 PM2
 ```bash
 npm install pm2 -g
 ```
 
-2. 使用 PM2 启动服务
+3. 使用 PM2 启动服务
 ```bash
+# 启动应用
 pm2 start server.js --name "web-admin-system"
+
+# 启动并设置开机自启
+pm2 startup
+pm2 save
 ```
 
-3. PM2 常用命令
+4. PM2 常用命令
 ```bash
 pm2 status              # 查看应用状态
-pm2 logs               # 查看日志
+pm2 logs               # 查看实时日志
+pm2 monit             # 监控 CPU 和内存使用
 pm2 restart web-admin-system  # 重启应用
 pm2 stop web-admin-system    # 停止应用
+pm2 delete web-admin-system  # 删除应用
+pm2 list              # 列出所有应用
 ```
+
+5. PM2 进程监控
+- 使用 `pm2 monit` 可以查看：
+  - CPU 使用率
+  - 内存使用情况
+  - 请求频率
+  - 错误日志
 
 ## 维护者
 
