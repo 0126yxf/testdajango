@@ -1,0 +1,24 @@
+# 依赖目录
+node_modules/
+
+# 环境配置
+.env
+
+# 日志文件
+logs/
+*.log
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# IDE 配置文件
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# 其他
+*.tmp
+*.temp
+.cache/ 

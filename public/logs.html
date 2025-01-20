@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>操作日志</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .logs-filter {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .logs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .logs-table th,
+        .logs-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logs-table th {
+            background: #f8f9fa;
+            font-weight: 500;
+        }
+
+        .operation-type {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .operation-type.login { background: #e3f2fd; color: #1976d2; }
+        .operation-type.upload { background: #e8f5e9; color: #2e7d32; }
+        .operation-type.sign { background: #fff3e0; color: #f57c00; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>操作日志</h1>
+            
+            <div class="logs-filter">
+                <input type="date" id="startDate" class="form-control">
+                <input type="date" id="endDate" class="form-control">
+                <input type="text" id="username" placeholder="用户名" class="form-control">
+                <select id="operationType" class="form-control">
+                    <option value="">所有操作</option>
+                    <option value="LOGIN">登录</option>
+                    <option value="UPLOAD">上传</option>
+                    <option value="SIGN">签名</option>
+                </select>
+                <button onclick="searchLogs()" class="button button-primary">搜索</button>
+            </div>
+
+            <table class="logs-table">
+                <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>用户</th>
+                        <th>操作类型</th>
+                        <th>操作描述</th>
+                        <th>IP地址</th>
+                        <th>客户端</th>
+                    </tr>
+                </thead>
+                <tbody id="logsTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 检查登录状态
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/check-auth', {
+                    credentials: 'include'
+                });
+                if (!response.ok) {
+                    window.location.href = '/login.html';
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                window.location.href = '/login.html';
+                return false;
+            }
+        }
+
+        async function loadLogs(params = {}) {
+            try {
+                const queryString = new URLSearchParams(params).toString();
+                const response = await fetch(`/api/logs?${queryString}`, {
+                    credentials: 'include'  // 添加凭证
+                });
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error(result.message);
+                }
+
+                const logsTable = document.getElementById('logsTable');
+                logsTable.innerHTML = result.data.map(log => `
+                    <tr>
+                        <td>${new Date(log.created_at).toLocaleString()}</td>
+                        <td>${log.username}</td>
+                        <td><span class="operation-type ${log.operation_type.toLowerCase()}">${log.operation_type}</span></td>
+                        <td>${log.operation_desc}</td>
+                        <td>${log.ip_address}</td>
+                        <td>${log.user_agent}</td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('加载日志失败:', error);
+                alert('加载日志失败: ' + error.message);
+            }
+        }
+
+        function searchLogs() {
+            const params = {
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                username: document.getElementById('username').value,
+                operationType: document.getElementById('operationType').value
+            };
+
+            // 移除空值
+            Object.keys(params).forEach(key => {
+                if (!params[key]) delete params[key];
+            });
+
+            loadLogs(params);
+        }
+
+        // 页面加载时检查登录状态
+        document.addEventListener('DOMContentLoaded', async function() {
+            if (await checkAuth()) {
+                loadLogs();
+            }
+        });
+    </script>
+</body>
+</html> 

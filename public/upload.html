@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>上传文件</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 上传页面容器 */
+        .upload-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 上传卡片 */
+        .upload-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+        }
+
+        /* 页面标题 */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .page-title {
+            font-size: 24px;
+            color: #333;
+            margin: 0;
+        }
+
+        .back-button {
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #666;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-button:hover {
+            background: white;
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin-bottom: 25px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: white;
+            box-sizing: border-box;
+            height: 48px;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+
+        /* 文件上传区域 */
+        .file-upload-area {
+            width: 100%;
+            border: 2px dashed #e1e1e1;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .file-upload-area:hover {
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .file-upload-icon {
+            font-size: 40px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .file-upload-text {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .file-upload-hint {
+            font-size: 13px;
+            color: #888;
+        }
+
+        /* 文件信息显示 */
+        .selected-file {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .file-icon {
+            font-size: 24px;
+            color: #667eea;
+        }
+
+        .file-details {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .file-size {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* 提交按钮 */
+        .submit-button {
+            width: 100%;
+            height: 48px;
+            padding: 0 16px;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary-gradient);
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102,126,234,0.2);
+        }
+
+        .submit-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 加载动画 */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 表单容器 */
+        #uploadForm {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .upload-container {
+                padding: 15px;
+            }
+
+            .upload-card {
+                padding: 20px;
+            }
+
+            .page-header {
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+            }
+
+            .page-title {
+                font-size: 20px;
+            }
+
+            .file-upload-area {
+                padding: 20px;
+            }
+
+            .file-upload-icon {
+                font-size: 32px;
+            }
+
+            .submit-button {
+                padding: 12px;
+            }
+
+            .form-control,
+            .submit-button {
+                height: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="upload-container">
+        <div class="upload-card">
+            <div class="logo-container">
+                <img src="/images/huahong-logo.png" alt="华宏科技" class="logo">
+            </div>
+            <div class="page-header">
+                <h1 class="page-title">上传文件</h1>
+                <button class="back-button" onclick="window.location.href='/admin.html'">
+                    <span>←</span>返回
+                </button>
+            </div>
+            <form id="uploadForm">
+                <div class="form-group">
+                    <label for="title">文件标题 <span style="color: #dc2626">*</span></label>
+                    <input type="text" id="title" class="form-control" required placeholder="请输入文件标题">
+                </div>
+                <div class="form-group">
+                    <label for="requiredSigns">需要签名人数 <span style="color: #dc2626">*</span></label>
+                    <input type="number" id="requiredSigns" class="form-control" required min="1" value="1" placeholder="请输入需要的签名人数">
+                    <div class="file-upload-hint" style="margin-top: 8px">设置需要多少人签名才算完成</div>
+                </div>
+                <div class="form-group">
+                    <label>选择文件 <span style="color: #dc2626">*</span></label>
+                    <div class="file-upload-area" onclick="document.getElementById('file').click()">
+                        <div class="file-upload-icon">📄</div>
+                        <div class="file-upload-text">点击或拖拽文件到此处上传</div>
+                        <div class="file-upload-hint">支持的文件类型：PDF、JPG、PNG，最大10MB</div>
+                        <input type="file" id="file" style="display: none" accept=".pdf,.jpg,.jpeg,.png">
+                    </div>
+                    <div id="selectedFile" style="display: none" class="selected-file">
+                        <div class="file-icon">📎</div>
+                        <div class="file-details">
+                            <div class="file-name"></div>
+                            <div class="file-size"></div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="submit-button">
+                    <span class="button-text">上传文件</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="upload.js"></script>
+</body>
+</html> 
