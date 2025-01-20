@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件告知书签名系统</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>文件告知书签名系统</h1>
+        
+        <div class="notice-section">
+            <h2 id="noticeTitle">告知书标题</h2>
+            <div class="file-info">
+                <p>文件名：<span id="fileName"></span></p>
+                <p>上传时间：<span id="uploadTime"></span></p>
+            </div>
+            <div class="notice-content">
+                <iframe id="noticePdf" width="100%" height="500px"></iframe>
+            </div>
+        </div>
+
+        <div class="signature-section">
+            <h2>电子签名</h2>
+            <canvas id="signatureCanvas" width="500" height="200"></canvas>
+            <div class="button-group">
+                <button id="clearButton">清除签名</button>
+                <button id="saveButton">确认签名</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

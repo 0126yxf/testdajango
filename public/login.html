@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 登录容器样式 */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-gradient);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* 登录卡片样式 */
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        /* Logo 容器样式 */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* 登录头部样式 */
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: #333;
+            font-size: 24px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .login-header p {
+            color: #666;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* 表单组件样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            height: 48px;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+            outline: none;
+        }
+
+        /* 登录按钮样式 */
+        .login-button {
+            width: 100%;
+            height: 48px;
+            padding: 12px 16px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102,126,234,0.2);
+        }
+
+        .login-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* 错误消息样式 */
+        .error-message {
+            background-color: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+        }
+
+        /* 加载动画样式 */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 15px;
+            }
+
+            .login-card {
+                padding: 30px 20px;
+            }
+
+            .login-header h1 {
+                font-size: 22px;
+            }
+
+            .form-control,
+            .login-button {
+                height: 44px;
+            }
+        }
+
+        /* 数据库选择下拉框样式 */
+        select.form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            height: 48px;
+            background-color: white;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8.825L1.175 4 2.238 2.938 6 6.7l3.763-3.762L10.825 4z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+
+        select.form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+            outline: none;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 480px) {
+            select.form-control {
+                height: 44px;
+                padding: 10px 14px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-container">
+                <img src="/images/huahong-logo.png" alt="华宏科技" class="logo">
+            </div>
+            <div class="login-header">
+                <h1>欢迎登录</h1>
+                <p>请输入您的账号和密码</p>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="database">选择数据库</label>
+                    <select id="database" class="form-control" required>
+                        <option value="sqlserver" selected>SQL Server</option>
+                        <option value="mysql">MySQL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="username">用户名</label>
+                    <input type="text" id="username" class="form-control" placeholder="请输入用户名" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
+                </div>
+                <button type="submit" class="login-button">
+                    <span class="button-text">登录</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const button = this.querySelector('button');
+            const buttonText = button.querySelector('.button-text');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            try {
+                // 禁用按钮并显示加载状态
+                button.disabled = true;
+                buttonText.innerHTML = '<span class="loading-spinner"></span>登录中...';
+                errorMessage.style.display = 'none';
+
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-Database-Type': document.getElementById('database').value
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        username: document.getElementById('username').value,
+                        password: document.getElementById('password').value,
+                        database: document.getElementById('database').value
+                    })
+                });
+
+                const result = await response.json();
+
+                if (!result.success) {
+                    throw new Error(result.message || '登录失败');
+                }
+
+                // 保存数据库选择到 sessionStorage
+                sessionStorage.setItem('database', document.getElementById('database').value);
+
+                // 重定向到管理页面
+                window.location.href = '/admin.html';
+
+            } catch (error) {
+                console.error('Login failed:', error);
+                errorMessage.textContent = error.message || '登录失败，请重试';
+                errorMessage.style.display = 'block';
+            } finally {
+                // 恢复按钮状态
+                button.disabled = false;
+                buttonText.textContent = '登录';
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,23 @@
+{
+  "name": "file-signature-system",
+  "version": "1.0.0",
+  "description": "File signature system",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-mysql-session": "^2.1.7",
+    "express-session": "^1.17.2",
+    "mssql": "^9.3.2",
+    "multer": "^1.4.3",
+    "mysql2": "^2.3.0",
+    "qrcode": "^1.4.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>签字记录管理系统</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode.js@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>签字记录管理系统</h1>
+        
+        <div class="upload-section">
+            <h2>上传新告知书</h2>
+            <form id="noticeForm">
+                <div class="form-group">
+                    <label for="noticeTitle">告知书标题：</label>
+                    <input type="text" id="noticeTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="noticeFile">告知书文件（PDF）：</label>
+                    <input type="file" id="noticeFile" accept=".pdf" required>
+                </div>
+                <button type="submit">上传告知书</button>
+            </form>
+        </div>
+
+        <div class="search-section">
+            <input type="text" id="searchInput" placeholder="搜索标题...">
+            <input type="date" id="dateFilter">
+            <button id="searchButton">搜索</button>
+        </div>
+
+        <div class="records-section">
+            <table id="recordsTable">
+                <thead>
+                    <tr>
+                        <th>日期时间</th>
+                        <th>告知书标题</th>
+                        <th>签名记录</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="recordsList">
+                    <!-- 记录将通过JavaScript动态添加 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="admin.js"></script>
+</body>
+</html> 

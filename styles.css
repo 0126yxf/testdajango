@@ -1,0 +1,60 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.notice-section, .signature-section {
+    margin: 20px 0;
+}
+
+#noticeText {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#signatureCanvas {
+    border: 1px solid #000;
+    background: #fff;
+    margin: 10px 0;
+}
+
+.button-group {
+    margin-top: 10px;
+}
+
+button {
+    padding: 8px 16px;
+    margin-right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.signature-status {
+    text-align: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    margin: 20px 0;
+}
+
+.signature-status .confirmed {
+    color: #4CAF50;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.signature-status .confirm-time {
+    color: #666;
+    font-size: 0.9em;
+} 

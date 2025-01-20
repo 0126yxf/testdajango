@@ -1,0 +1,454 @@
+/* 全局样式 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    color: #2c3e50;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 标题样式 */
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.2em;
+    font-weight: 600;
+}
+
+h2 {
+    color: #34495e;
+    margin: 20px 0;
+    font-size: 1.6em;
+}
+
+/* 上传区域样式 */
+.upload-section {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34495e;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.form-group input[type="text"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* 搜索区域样式 */
+.search-section {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.search-section input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* 表格样式 */
+.records-section {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+    background-color: #f8fafc;
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: #f8fafc;
+}
+
+/* 按钮样式 */
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+.view-button {
+    background-color: #3498db;
+    color: white;
+}
+
+.view-button:hover {
+    background-color: #2980b9;
+}
+
+.share-button {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.share-button:hover {
+    background-color: #27ae60;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+.view-signatures {
+    background-color: #9b59b6;
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.9em;
+}
+
+.view-signatures:hover {
+    background-color: #8e44ad;
+}
+
+/* 文件链接样式 */
+.file-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.file-link:hover {
+    text-decoration: underline;
+}
+
+/* 模态框样式优化 */
+.qr-modal, .file-preview-modal {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.qr-modal-content, .file-preview-content {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+}
+
+.qr-info input {
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+/* 签名记录样式 */
+.signatures-preview {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.signature-item {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* 文件上传提示 */
+.file-tips {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* 图片预览样式 */
+.image-preview {
+    text-align: center;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+/* 调整预览模态框样式 */
+.file-preview {
+    margin: 20px 0;
+    background: #f8fafc;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* 二维码模态框样式 */
+.qr-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.qr-modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 90%;
+}
+
+.qr-image {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.qr-image canvas {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: white;
+}
+
+.qr-info {
+    margin: 20px 0;
+}
+
+.qr-info p {
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.qr-info input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.qr-info button {
+    width: 100%;
+    padding: 10px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.qr-info button:hover {
+    background: #2980b9;
+}
+
+.close-modal {
+    width: 100%;
+    padding: 10px;
+    background: #666;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.close-modal:hover {
+    background: #555;
+}
+
+/* 二维码容器样式 */
+[id^="qrcode-"] {
+    margin: 20px auto;
+    padding: 10px;
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+[id^="qrcode-"] img {
+    display: block;
+    margin: 0 auto;
+}
+
+/* 刷新按钮样式 */
+.refresh-button {
+    background-color: #3498db;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+.refresh-button:hover {
+    background-color: #2980b9;
+}
+
+.refresh-button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+.refresh-icon {
+    display: inline-block;
+    font-size: 16px;
+    transition: transform 0.3s ease;
+}
+
+.refreshing .refresh-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 调整搜索区域的按钮样式 */
+.search-section button {
+    white-space: nowrap;
+    min-width: 80px;
+}
+
+/* 调整按钮间距 */
+.search-section {
+    gap: 10px;
+}
+
+/* 签名状态样式 */
+.signature-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.signature-count {
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 0.9em;
+}
+
+.signature-count.completed {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.form-tips {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+input[type="number"] {
+    width: 100px;
+    padding: 8px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* 头部布局 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+/* 登出按钮样式 */
+.logout-button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+    transform: translateY(-1px);
+} 

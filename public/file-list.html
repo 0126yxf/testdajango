@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件列表</title>
+    <style>
+        /* 复用基础样式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .file-list {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .file-list th,
+        .file-list td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .file-list th {
+            background-color: #f8f9fa;
+        }
+        .back-button {
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>文件列表</h1>
+        <button class="back-button" onclick="window.location.href='/admin.html'">返回</button>
+    </div>
+    <div class="content">
+        <table class="file-list">
+            <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>文件大小</th>
+                    <th>需要签名人数</th>
+                    <th>上传时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="fileList">
+                <!-- 文件列表将通过 JavaScript 动态添加 -->
+            </tbody>
+        </table>
+    </div>
+    <script src="file-list.js"></script>
+</body>
+</html> 
