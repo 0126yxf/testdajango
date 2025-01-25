@@ -25,16 +25,25 @@ const sqlServerConfig = {
     pool: {
         max: 10,
         min: 0,
-        idleTimeoutMillis: 30000
+        idleTimeoutMillis: 30000,
+        acquireTimeoutMillis: 30000,
+        retryDelay: 1000,
+        retryAttempts: 3
     }
 };
 
 class DatabaseFactory {
     static currentConnection = null;
     static currentPool = null;
+    static keepAliveInterval = null;
 
     static async closeCurrentConnection() {
         try {
+            if (this.keepAliveInterval) {
+                clearInterval(this.keepAliveInterval);
+                this.keepAliveInterval = null;
+            }
+
             if (this.currentPool) {
                 await this.currentPool.close();
                 this.currentPool = null;
@@ -45,9 +54,9 @@ class DatabaseFactory {
                 }
                 this.currentConnection = null;
             }
-            console.log('数据库连接已关闭');
+            logger.info('数据库连接已关闭');
         } catch (error) {
-            console.error('关闭数据库连接失败:', error);
+            logger.error('关闭数据库连接失败:', error);
             throw error;
         }
     }
@@ -67,6 +76,21 @@ class DatabaseFactory {
                 case 'sqlserver':
                     this.currentPool = await sql.connect(sqlServerConfig);
                     this.currentConnection = this.currentPool;
+                    
+                    this.keepAliveInterval = setInterval(async () => {
+                        try {
+                            await this.currentPool.request().query('SELECT 1');
+                            logger.debug('数据库保活检查成功');
+                        } catch (error) {
+                            logger.error('数据库保活检查失败，尝试重新连接', error);
+                            await this.reconnect(type);
+                        }
+                    }, 60000);
+
+                    this.currentPool.on('error', async (err) => {
+                        logger.error('数据库连接错误，尝试重新连接', err);
+                        await this.reconnect(type);
+                    });
                     break;
                 
                 default:
@@ -82,6 +106,18 @@ class DatabaseFactory {
                 stack: error.stack
             });
             throw error;
+        }
+    }
+
+    static async reconnect(type) {
+        try {
+            logger.info('尝试重新连接数据库');
+            await this.closeCurrentConnection();
+            await this.createConnection(type);
+            logger.info('数据库重新连接成功');
+        } catch (error) {
+            logger.error('数据库重新连接失败', error);
+            setTimeout(() => this.reconnect(type), 5000);
         }
     }
 
